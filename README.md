@@ -1,5 +1,18 @@
 # Aula 15: Construção de uma Página de Sorteio com AWS
 
+### **1. Inserindo front no AWSAmplify - Conectando ao meu github**
+![IAM config 1](img/passo1-conectando-github.png)
+---
+### **2. Autorizaçao**
+![IAM config 1](img/passo2-autorizacao_github.png)
+--
+### **3. Selecionando Repo**
+![IAM config 1](img/passo3-selecionerepositorio.png)
+--
+### **4. Inserindo Nome do App**
+![IAM config 1](img/passo4-inserindonome.png)
+--
+
 ## **Objetivo da Aula**
 
 Nesta aula, vamos construir uma página de sorteio automática usando AWS. O usuário poderá inserir o nome do sorteio, o número mínimo e o número máximo, e nossa aplicação, utilizando AWS Lambda, retornará um número aleatório dentro desse intervalo. Vamos dividir o projeto em duas etapas principais, utilizando o AWS Amplify para hospedar a página e AWS Lambda para a lógica de geração do número.
@@ -72,7 +85,7 @@ O AWS Lambda permite executar código em resposta a eventos. Vamos usá-lo para 
 #### **Passo a Passo: Criando a Função Lambda**
 
 1. No console da AWS, acesse **AWS Lambda** e crie uma nova função chamada `SorteioFunction`.
-2. Selecione **Python 3.9** como a linguagem de execução.
+2. Selecione **Python 3.12** como a linguagem de execução.
 3. Substitua o código padrão pelo seguinte:
 
 ```python
@@ -135,10 +148,13 @@ Agora que já temos a página de sorteio e a função Lambda configurada para re
 
 ### **Passo a Passo: Criando a Tabela DynamoDB**
 
+![IAM config 1](img/passo5-criandoDynamoDB.png)
+
 1. No console da AWS, vá até o serviço **DynamoDB** e clique em **Create Table**.
 2. Defina o nome da tabela como `Sorteios`.
 3. A chave de partição será `SorteioID` (tipo String).
 4. Conclua a criação da tabela.
+5. Salvar o código ARN no .env
 
 Agora, a tabela `Sorteios` está pronta para receber os dados dos sorteios.
 
@@ -198,6 +214,30 @@ def lambda_handler(event, context):
 - **put_item**: Salvamos os dados do sorteio (nome, números mínimo e máximo, número sorteado, e a data do sorteio) na tabela DynamoDB.
 
 ### **Atualizando o Frontend (Formulário HTML)**
+
+### **Adicionando política de uso do Dynamodb(json liberando tudo pra ARN)**
+
+![IAM config 1](img/passo6.1-adicionando-permissão-de-uso-iam.png)
+
+![IAM config 1](img/passo6.2-adicionando-permissão-de-uso-iam.png)
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullAccessDynamoDB",
+      "Effect": "Allow",
+      "Action": "dynamodb:*",
+      "Resource": "arn:aws:dynamodb:us-east-1:354918368386:table/SorteioJornadaDados"
+    }
+  ]
+}
+```
+![Add Nome](img/passo6.3-adicionando-permissão-de-uso-iam.png)
+
+### **Visualizando dados no DynamomDB**
+
+![IAM config 1](img/passo7-VisualizacaodosDados_DynamomDB.png)
 
 ### Aula Completa: Criando um Sistema de Sorteio com AWS e Frontend Integrado
 
@@ -300,5 +340,6 @@ Aqui está o código HTML para a página de sorteio. Vamos aplicar um design sim
     </form>
 </body>
 </html>
-```#   a u l a 1 5 _ n o s q l _ a w s _ d y n a m o d b  
+```#   a u l a 1 5 _ n o s q l _ a w s _ d y n a m o d b 
+ 
  
