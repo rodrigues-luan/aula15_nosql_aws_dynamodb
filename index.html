@@ -61,7 +61,7 @@
 
             fetch("https://ztxzm2y434.execute-api.us-east-1.amazonaws.com/prod/", requestOptions)
             .then(response => response.text())
-            .then(result => alert("Número sorteado: " + JSON.parse(parse(result).body).numeroSorteado))
+            .then(result => alert("Número sorteado: " + JSON.parse(JSON.parse(result).body).numeroSorteado))
             .catch(error => console.log('error', error));
         }
     </script>
