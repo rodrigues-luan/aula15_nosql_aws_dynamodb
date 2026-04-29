@@ -340,6 +340,4 @@ Aqui está o código HTML para a página de sorteio. Vamos aplicar um design sim
     </form>
 </body>
 </html>
-```#   a u l a 1 5 _ n o s q l _ a w s _ d y n a m o d b 
- 
- 
+```
